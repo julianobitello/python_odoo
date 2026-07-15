@@ -1,29 +1,66 @@
+from database import criar_tabelas
 from models.produto import Produto
 from services.produto_service import ProdutoService
 
-produto1 = Produto("Mouse Gamer", 150.90, 30)
-produto2 = Produto("Monitor Gamer", 1500.90, 5)
+criar_tabelas()
 
+produto_service = ProdutoService()
 
-produtoService = ProdutoService() #Criando isntancia
-produtoService.cadastrar(produto1)
-produtoService.cadastrar(produto2)
-produtos = produtoService.listar()
+# CREATE
+produto = Produto("Teclado Mecânico", 300.00, 15)
+
+produto_service.cadastrar(produto)
+
+print("========== PRODUTOS APÓS CADASTRO ==========")
+
+produtos = produto_service.listar()
+
 for produto in produtos:
     print(produto.to_dict())
 
-print("---------------------------------------------------------------------------------")
-# produto_encontrado = produtoService.buscar_por_nome("teclado")
-# print(produto_encontrado.nome if produto_encontrado else "Produto não encontrado")
 
-print("---------------------------------------------------------------------------------")
+# READ
+print("========== BUSCAR PRODUTO ==========")
 
-produtoService.atualizar(
-    "Mouse Gamer",
-    Produto("Webcam", 50.90, 10)
-)
+produto_encontrado = produto_service.buscar_por_nome("Teclado")
 
-produtos = produtoService.listar()
+if produto_encontrado:
+    print(produto_encontrado.to_dict())
+else:
+    print("Produto não encontrado")
+
+
+# UPDATE
+print("========== ATUALIZANDO ==========")
+
+produto_encontrado.nome = "Teclado RGB"
+produto_encontrado.preco = 450.00
+produto_encontrado.quantidade = 10
+
+produto_service.atualizar(produto_encontrado)
+
+print("Produto atualizado!")
+
+
+# LISTAR APÓS UPDATE
+print("========== APÓS UPDATE ==========")
+
+produtos = produto_service.listar()
+
+for produto in produtos:
+    print(produto.to_dict())
+
+
+# DELETE
+print("========== DELETANDO ==========")
+
+produto_service.deletar(produto_encontrado)
+
+
+# LISTAR APÓS DELETE
+print("========== APÓS DELETE ==========")
+
+produtos = produto_service.listar()
 
 for produto in produtos:
     print(produto.to_dict())
