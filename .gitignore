@@ -1,0 +1,15 @@
+# Ambiente virtual
+.venv/
+
+# Cache do Python
+__pycache__/
+*.py[cod]
+
+# Configurações do PyCharm
+.idea/
+
+# Banco SQLite (vamos criar depois)
+*.db
+
+# Arquivos do sistema
+.DS_Store
